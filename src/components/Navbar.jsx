@@ -23,23 +23,22 @@ const Navbar = () => {
     };
 
 
-    const handleAction = () => {
-        if (user) {
-            navigate('/dashboard');
-        } else {
-            navigate('/login');
-        }
-    };
-
     const handleLogout = () => {
         logout();
         navigate('/');
     };
 
+    const handleLogoClick = (e) => {
+        if (location.pathname === '/') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
     return (
         <nav style={{ backgroundColor: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', padding: '1rem 0', position: 'sticky', top: 0, zIndex: 1000 }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
+                <Link to="/" onClick={handleLogoClick} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', color: 'inherit' }}>
                     <Activity color="var(--primary-color)" size={32} />
                     <span style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#333' }}>HemScan</span>
                 </Link>
@@ -71,10 +70,10 @@ const Navbar = () => {
                         </div>
                     )}
 
-                    {user && (
-                        <button onClick={handleAction} className="btn btn-primary">
+                    {user && location.pathname !== '/' && (
+                        <Link to="/dashboard" className="btn btn-primary">
                             Analyze Report
-                        </button>
+                        </Link>
                     )}
                 </div>
             </div>
